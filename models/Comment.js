@@ -9,7 +9,8 @@ const ReplySchema = new Schema(
     },
     replyBody: {
       type: String,
-      required: true
+      required: 'You need to enter a reply',
+      trim: true
     },
     writtenBy: {
       type: String,
@@ -34,11 +35,13 @@ const CommentSchema = new Schema(
   {
   writtenBy: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   commentBody: {
     type: String,
-    required: true
+    required: 'You need to enter a comment!',
+    trim: true
   },
   createdAt: {
     type: Date,
