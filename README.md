@@ -1,7 +1,7 @@
 # PizzaHunt
 
 ## Description
-A web application that allows users to post about anything pizza related. From the best pizza to the worst, users are encouraged to post their creative ideas and opinion on pizza from all over the world! Users can even create posts while offline. 
+A progressive web application that allows users to post about anything pizza related. From the best pizza to the worst, users are encouraged to post their creative ideas and opinion on pizza from all over the world! Users can even create posts while offline. 
 
 ![image](https://user-images.githubusercontent.com/86696492/182634362-4dc60308-e697-443b-b07b-283f0ca5fef1.png)
 
