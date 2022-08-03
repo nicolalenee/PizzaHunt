@@ -1,4 +1,4 @@
-const { get } = require("express/lib/response");
+
 
 // variable that holds the db connection
 let db;

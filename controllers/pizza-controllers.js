@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const { Pizza } = require('../models');
 
-
-
 const pizzaController = {
 
   // get all pizzas
