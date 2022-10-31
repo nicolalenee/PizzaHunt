@@ -26,7 +26,7 @@ This app also utilizes IndexedDB to save data locally to the browser when there'
 ## API Organization
 On the backend, we followed standard RESTful API structure. However, to stick even tighter to this method, functionality and endpoints were separated into two separate directories. Although there are more files to track, the code is more readable with these concerns separated.
 
-Let's view an example of a controller for updating the pizza model. For this, the controller is represented as an object with a number of different methods. Here, we perform CRUD operations on the pizza object using mongoose as an Object Document Map.
+Let's view an example of a controller for updating the pizza model. For this, the controller is represented as an object with a number of different methods. Here, we perform CRUD operations on the pizza model which we created using mongoose as an Object Document Map.
 
 ```javascript
 const pizzaController => {
