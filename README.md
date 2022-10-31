@@ -7,13 +7,18 @@ A progressive web application that allows users to post about anything pizza rel
 
 
 ## Usage
-Users are able to sign-in and post about pizza, comment on recipes, and create threads within the comments. 
+Users are able to sign-in and post about pizza, comment on recipes, and create threads within the comments. Users do not need to sign up or sign-in, only leave a name or alias on each pizza or comment. This is a free pizza world and we would love everyone to join with no committment! 
+
+<img width="1349" alt="image" src="https://user-images.githubusercontent.com/86696492/199129042-d45d8cfb-ffee-4480-b04c-be98fc0b2a9e.png">
+
 
 ## Technologies
 * Node.js
 * Express.js
 * MongoDB / mongoose
-* IndexedDB
+* IndexedDB 
+
+
 For this project, a NoSQL approach was used because it allows easy storage and retrieval of unstructured data, which can significantly improve performance especially for applications that can use a lot of data. This feature will all the application to be able to accommodate the client's fluid ideas: new types of applications with very large, ever-changing datasets.
 
 This app also utilizes IndexedDB to save data locally to the browser when there's no internet connection. 
@@ -24,47 +29,40 @@ On the backend, we followed standard RESTful API structure. However, to stick ev
 Let's view an example of a controller for updating the pizza model. For this, the controller is represented as an object with a number of different methods. Here, we perform CRUD operations on the pizza object using mongoose as an Object Document Map.
 
 ```javascript
-const pizzaController = {
-	getAllPizza(req, res) {
-		Pizza.find({})
-			.then(dbPizzaData => res.json(dbPizzaData))
-			.catch(err =>
-				console.log(err);
-				res.status(400).json(err);
-	},
-	getPizzaById({params}, res) {
-		Pizza.findOne({_id: params.id})
-			.then(dbPizzaData => {
-				if(!dbPizzaData) {
-					res.status(400).json({ message: 'No pizza found with this id!'});
-					return;
-				}
-        res.json(dbPizzaData);
-			})
-			.catch(err => {
-				console.log(err);
-				res.status(400).json(err);
-			});
-	},
-	createPizza({ body}, res) {
-		Pizza.create(body)
-			.then(dbPizzaData => res.json(dbPizzaData))
-			.catch(err => res.status(400).json(err));
-	},
-	updatePizza({ params, body }, res) {
-	  Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })
-	    .then(dbPizzaData => {
-	      if (!dbPizzaData) {
-	        res.status(404).json({ message: 'No pizza found with this id!' });
-	        return;
-	      }
-	      res.json(dbPizzaData);
-	    })
-	    .catch(err => res.status(400).json(err));
-	},
-
-	deletePizza({ params }, res) {
-  Pizza.findOneAndDelete({ _id: params.id })
+const pizzaController => {
+  getAllPizza(req, res) {
+    Pizza.find({})
+    .then(dbPizzaData => res.json(dbPizzaData))
+    .catch(err =>{
+      console.log(err);
+      res.status(400).json(err);
+    })
+  },
+  getPizzaById({ params }, res) {
+    Pizza.findOne({_id: params.id})
+    .then(dbPizzaData => {
+      if (!dbPizzaData) {
+        res.status(400).json({ message: 'No pizza found with this id!'});
+        return;
+      }
+      res.json(dbPizzaData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).json(err);
+    })
+  },
+  createPizza({ body }, res) {
+    Pizza.create(body)
+    .then(dbPizzaData => res.json(dbPizzaData))
+    .catch(err => res.status(400).json(err));
+  },
+  updatePizza({ params, body }, res ) {
+    Pizza.findOneAndUpdate(
+      { _id: params.id },
+       body, 
+       { new: true }
+    )
     .then(dbPizzaData => {
       if (!dbPizzaData) {
         res.status(404).json({ message: 'No pizza found with this id!' });
@@ -73,7 +71,18 @@ const pizzaController = {
       res.json(dbPizzaData);
     })
     .catch(err => res.status(400).json(err));
-	}
+  },
+  deletePizza({ params }, res) {
+    Pizza.findOneAndDelete({ _id: params.id })
+    .then(dbPizzaData => {
+      if (!dbPizzaData) {
+        res.status(404).json({ message: 'No pizza found with this id!' });
+        return;
+      }
+      res.json(dbPizzaData);
+    })
+    .catch(err => res.status(400).json(err));
+  }
 }
 ```
 Since these methods will serve as callback functions for our various routes, we can easily hook them into our routes. Express router() is a valuable asset for this purpose. 
@@ -94,7 +103,7 @@ router
 
 module.exports = router;
 ```
-Finally, we call these routes and gather the information on the front-end using standard vanilla javascript. Check out the snippet below of the functioon to submit a pizza (aka add an entry to the database):
+Finally, we call these routes and gather the information on the front-end using standard vanilla javascript. Check out the snippet below of the function to submit a pizza (aka add an entry to the database):
 ```javascript
 const handlePizzaSubmit = event => {
   event.preventDefault();
