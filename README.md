@@ -85,22 +85,21 @@ const pizzaController => {
   }
 }
 ```
-Since these methods will serve as callback functions for our various routes, we can easily hook them into our routes. Express router() is a valuable asset for this purpose. 
+Since these methods will serve as callback functions for our various routes, we can easily hook them into our routes. Express.Router() is a valuable asset for this purpose. 
 
 ```javascript
 const router = require('express').Router();
 /* /api/pizzas */
 router
-	.route('/')
-	.get(getAllPizza)
-	.post(createPizza);
-/* /api/pizzas/:id */
+  .route('/')
+  .get(getAllPizza)
+  .post(createPizza);
+/* /api/pizza/:id */
 router
-	.route('/:id')
-	.get(getPizzaById)
-	.put(updatePizza)
-	.delete(deletePizza);
-
+  .route(':/id')
+  .get(getPizzaById)
+  .put(updatePizza)
+  .delete(deletePizza);
 module.exports = router;
 ```
 Finally, we call these routes and gather the information on the front-end using standard vanilla javascript. Check out the snippet below of the function to submit a pizza (aka add an entry to the database):
