@@ -140,6 +140,56 @@ const handlePizzaSubmit = event => {
 };
 ```
 Here, we hit the `/api/pizzas` route and using a `POST` method. This calls the `createPizza()` method that we defined in the controller object.
+
+## PWA Configuration
+Pizza is a global affair. Sometimes pizza's influence can be so impactful that users may want to update or add a pizza right then and there while they're at a restaraunt. Pizza Hunt wants users to be able to add that information to the database even if user's don't have access to the internet!
+
+To accomplish this, we implemented IndexedDB, a NoSQL client-side storage API in the browser. This allows us to manage data-persistence by saving data locally to browser when there's no internet connection.
+
+After establishing a database connection, we can open transactions on that database to hold the information and submit it once internet connection has been restored. The code block below contains demonstrates this process:
+```javascript
+// this function will be executed when the user's connection comes back online so that way we can post that information to the database
+function uploadPizza() {
+  // open a transaction on your db 
+  const transaction = db.transaction(['new_pizza'], 'readwrite');
+  // access your object store
+  const pizzaObjectStore = transaction.objectStore('new_pizza');
+  // get all records from store and set to a variable
+  const getAll = pizzaObjectStore.getAll();
+  // upon a successful .getAll() execution, run this function
+  getAll.onsuccess = function() {
+    // if there was data in the store, send it to the api server
+    if (getAll.result.length > 0) {
+      fetch('/api/pizzas', {
+        method: 'POST',
+        body: JSON.stringify(getAll.result),
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(serverResponse => {
+        if (serverResponse.message) {
+          throw new Error(serverResponse);
+        }
+        // open one more transaction
+        const transaction = db.transaction(['new_pizza'], 'readwrite');
+        // access the new_pizza object store
+        const pizzaObjectStore = transaction.objectStore('new_pizza');
+        // clear all items in your store
+        pizzaObjectStore.clear();
+
+        alert('All saved pizza has been submitted!');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+  }
+};
+
+```
 ## Links
 [Repository](https://github.com/nicolalenee/PizzaHunt)  
 [Deployment](https://vast-garden-75186.herokuapp.com)
