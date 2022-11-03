@@ -1,7 +1,7 @@
 # PizzaHunt
 
 ## Description
-A progressive web application that allows users to post about anything pizza related. From the best pizza to the worst, users are encouraged to post their creative ideas and opinion on pizza from all over the world! Users can even create posts while offline. 
+A progressive web application that allows users to post about anything pizza related. From the best pizza to the worst, users are encouraged to post their creative ideas and opinions on pizza from all over the world! Users can even create posts while offline. 
 
 ![image](https://user-images.githubusercontent.com/86696492/182634362-4dc60308-e697-443b-b07b-283f0ca5fef1.png)
 
@@ -102,7 +102,7 @@ router
   .delete(deletePizza);
 module.exports = router;
 ```
-Finally, we call these routes and gather the information on the front-end using standard vanilla javascript. Check out the snippet below of the function to submit a pizza (aka add an entry to the database):
+Finally, we call these routes and gather the information on the front-end using standard vanilla javascript. Check out the snippet below of the function to submit a pizza to the database:
 ```javascript
 const handlePizzaSubmit = event => {
   event.preventDefault();
@@ -142,7 +142,7 @@ const handlePizzaSubmit = event => {
 Here, we hit the `/api/pizzas` route and using a `POST` method. This calls the `createPizza()` method that we defined in the controller object.
 
 ## PWA Configuration
-Pizza is a global affair. Sometimes pizza's influence can be so impactful that users may want to update or add a pizza right then and there while they're at a restaraunt. Pizza Hunt wants users to be able to add that information to the database even if user's don't have access to the internet!
+Pizza is a global affair. Sometimes pizza's influence can be so impactful that users may want to update or add a pizza right then and there while they're at a restaraunt. Pizza Hunt wants users to be able to add that information to the database even if users don't have access to the internet!
 
 To accomplish this, we implemented IndexedDB, a NoSQL client-side storage API in the browser. This allows us to manage data-persistence by saving data locally to the browser when there's no internet connection.
 
